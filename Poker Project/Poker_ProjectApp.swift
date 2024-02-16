@@ -1,14 +1,14 @@
 //
-//  Poker_ProjectApp.swift
-//  Poker Project
+//  GamblingApp.swift
+//  Gambling
 //
-//  Created by Kryvenko, Lev on 2/16/24.
+//  Created by Kryvenko, Lev on 2/12/24.
 //
 
 import SwiftUI
 
 @main
-struct Poker_ProjectApp: App {
+struct GamblingApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

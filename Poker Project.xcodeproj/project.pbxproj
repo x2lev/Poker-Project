@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46D159E32B7FF0C800F839E9 /* Poker_Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D159E22B7FF0C800F839E9 /* Poker_Objects.swift */; };
 		46F9E18D2B7FF02000789617 /* Poker_ProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9E18C2B7FF02000789617 /* Poker_ProjectApp.swift */; };
 		46F9E18F2B7FF02000789617 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9E18E2B7FF02000789617 /* ContentView.swift */; };
 		46F9E1912B7FF02000789617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46F9E1902B7FF02000789617 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46D159E22B7FF0C800F839E9 /* Poker_Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poker_Objects.swift; sourceTree = "<group>"; };
 		46F9E1892B7FF02000789617 /* Poker Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Poker Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F9E18C2B7FF02000789617 /* Poker_ProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poker_ProjectApp.swift; sourceTree = "<group>"; };
 		46F9E18E2B7FF02000789617 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				46F9E18C2B7FF02000789617 /* Poker_ProjectApp.swift */,
 				46F9E18E2B7FF02000789617 /* ContentView.swift */,
+				46D159E22B7FF0C800F839E9 /* Poker_Objects.swift */,
 				46F9E1902B7FF02000789617 /* Assets.xcassets */,
 				46F9E1922B7FF02000789617 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46D159E32B7FF0C800F839E9 /* Poker_Objects.swift in Sources */,
 				46F9E18F2B7FF02000789617 /* ContentView.swift in Sources */,
 				46F9E18D2B7FF02000789617 /* Poker_ProjectApp.swift in Sources */,
 			);
