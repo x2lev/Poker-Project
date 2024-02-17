@@ -22,12 +22,6 @@ struct ContentView: View {
     @State var playerHand = ["cardHeartsA", "cardHeartsK", "cardHeartsQ", "cardHeartsJ", "cardHearts10"]
     @State var toggles = [false, false, false, false, false]
     
-    init() {
-        for _ in 1...5 {
-            
-        }
-    }
-    
     var body: some View {
         ZStack {
             Rectangle()

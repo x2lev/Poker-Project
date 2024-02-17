@@ -40,34 +40,34 @@ class Hand: Comparable {
             hand_type = "Four of a Kind"
             hand_num = 7
             high_cards = four_of_a_kind()
-        }else if full_house(){
+        } else if full_house(){
             hand_type = "Full House"
             hand_num = 6
             high_cards = full_house()
-        }else if three_of_a_kind(){
+        } else if three_of_a_kind(){
             hand_type = "Three of a Kind"
             hand_num = 3
             high_cards = three_of_a_kind()
-        }else if two_pair(){
+        } else if two_pair(){
             hand_type = "Two Pair"
             hand_num = 2
             high_cards = two_pair()
-        }else if one_pair(){
+        } else if one_pair(){
             hand_type = "One Pair"
             hand_num = 1
             high_cards = one_pair()
-        }else{
+        } else{
             high_flush = flush()
             high_straight = straight()
             if high_flush && high_straight{
                 hand_type = high_straight[0].value == "A" ? "Royal Flush" : "Straight Flush"
                 hand_num = 8
                 high_cards = high_straight
-            }else if high_flush{
+            } else if high_flush{
                 hand_type = "Flush"
                 hand_num = 5
                 high_cards = high_flush
-            }else if high_straight{
+            } else if high_straight{
                 hand_type = "Straight"
                 hand_num = 4
                 high_cards = high_straight
