@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var deck = [
+    @State var deck: [String] = [
         "HeartsA", "HeartsK", "HeartsQ", "HeartsJ", "Hearts10", "Hearts9", "Hearts10", "Hearts9",
         "Hearts8", "Hearts7", "Hearts6", "Hearts5", "Hearts4", "Hearts3", "Hearts2",
         "DiamondsA", "DiamondsK", "DiamondsQ", "DiamondsJ", "Diamonds10", "Diamonds9", "Diamonds10", "Diamonds9",
@@ -19,7 +19,8 @@ struct ContentView: View {
         "Clubs8", "Clubs7", "Clubs6", "Clubs5", "Clubs4", "Clubs3", "Clubs2"
     ].shuffled()
     
-    @State var playerHand = ["cardHeartsA", "cardHeartsK", "cardHeartsQ", "cardHeartsJ", "cardHearts10"]
+    @State var playerHand: [Card] = []
+    
     @State var toggles = [false, false, false, false, false]
     
     var body: some View {

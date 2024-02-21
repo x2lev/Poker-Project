@@ -8,78 +8,79 @@
 import Foundation
 
 class Card: Comparable {
-    var suit: String
-    var value: String
-    var num_value: Int
-    init(suitInit: String, valueInit: String) {
+    public var suit: String
+    public var value: String
+    public var numValue: Int
+    init(_ suitInit: String, _ valueInit: String) {
         suit = suitInit
         value = valueInit
-        num_value = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].firstIndex(of: valueInit) ?? 0
+        numValue = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].firstIndex(of: valueInit) ?? 0
     }
-    static func == (lhs: Card, rhs: Card) -> Bool {
-        return lhs.num_value == rhs.num_value
+    public static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.numValue == rhs.numValue
     }
-    static func < (lhs: Card, rhs: Card) -> Bool{
-        return lhs.num_value < rhs.num_value
+    public static func < (lhs: Card, rhs: Card) -> Bool{
+        return lhs.numValue < rhs.numValue
     }
 }
 
 class Hand: Comparable {
-    var cards: [Card]
-    var card_freq: Dictionary<Int, Int>
-    var hand_type: String
-    var hand_num: Int
-    var high_cards: [Card]
-    init(cards: Card...) {
-        cards = cards.sorted()
-        card_freq = card_freq()
+    public var cards: [Card]
+    public var card_freq: Dictionary<Int, Int>
+    public var hand_type: String
+    public var hand_num: Int
+    public var high_cards: [Int]
+    init(cardsInit: Card...) {
+        cards = cardsInit.sorted()
         hand_type = "High Card"
         hand_num = 0
-        high_cards = cards
-        if four_of_a_kind(){
+        high_cards = []
+        card_freq = [:]
+        card_freq = getCardFreq()
+        if four_of_a_kind() != [] {
             hand_type = "Four of a Kind"
             hand_num = 7
             high_cards = four_of_a_kind()
-        } else if full_house(){
+        } else if full_house() != [] {
             hand_type = "Full House"
             hand_num = 6
             high_cards = full_house()
-        } else if three_of_a_kind(){
+        } else if three_of_a_kind() != [] {
             hand_type = "Three of a Kind"
             hand_num = 3
             high_cards = three_of_a_kind()
-        } else if two_pair(){
+        } else if two_pair() != [] {
             hand_type = "Two Pair"
             hand_num = 2
             high_cards = two_pair()
-        } else if one_pair(){
+        } else if one_pair() != [] {
             hand_type = "One Pair"
             hand_num = 1
             high_cards = one_pair()
-        } else{
-            high_flush = flush()
-            high_straight = straight()
-            if high_flush && high_straight{
-                hand_type = high_straight[0].value == "A" ? "Royal Flush" : "Straight Flush"
+        } else {
+            let high_flush = flush()
+            let high_straight = straight()
+            if high_flush != [] && high_straight != [] {
+                hand_type = high_straight[0] == 12 ? "Royal Flush" : "Straight Flush"
                 hand_num = 8
                 high_cards = high_straight
-            } else if high_flush{
+            } else if high_flush != [] {
                 hand_type = "Flush"
                 hand_num = 5
                 high_cards = high_flush
-            } else if high_straight{
+            } else if high_straight != [] {
                 hand_type = "Straight"
                 hand_num = 4
                 high_cards = high_straight
             }
         }
     }
-    static func == (lhs: Card, rhs: Card) -> Bool {
+    static func == (lhs: Hand, rhs: Hand) -> Bool {
         return lhs.hand_num == rhs.hand_num && lhs.high_cards == rhs.high_cards
     }
-    static func < (lhs: Card, rhs: Card) -> Bool{
+    static func < (lhs: Hand, rhs: Hand) -> Bool{
         if lhs.hand_num == rhs.hand_num {
-            for (s, o) in zip(high_cards, other.high_cards) {
+            for (s, o) in zip(lhs.high_cards, rhs.high_cards) {
                 if s != o {
                     return s < o
                 }
@@ -88,18 +89,18 @@ class Hand: Comparable {
         return lhs.hand_num < rhs.hand_num
     }
 
-    func card_freq(){
-        cards
+    func getCardFreq() -> Dictionary<Int, Int> {
+        var cardDict: Dictionary<Int, Int> = [:]
         for card in cards.sorted(){
-            if !cards.contains(card.num_value){
-                cards[card.num_value] = 1
+            if cardDict.keys.contains(card.numValue) {
+                cardDict[card.numValue]! += 1
             } else {
-                cards[card.num_value] += 1
+                cardDict[card.numValue] = 1
             }
         }
-        return cards
+        return cardDict
     }
-    func get_keys(find: Int) -> [Int] {
+    func getKeys(_ find: Int) -> [Int] {
         var found: [Int] = []
         for (k, v) in card_freq {
             if v == find {
@@ -108,57 +109,61 @@ class Hand: Comparable {
         }
         return found
     }
-    func flush(){
-        suit = cards[0].suit
+    func flush() -> [Int] {
+        let suit = cards[0].suit
         var vals: [Int] = []
         for card in cards[0...] {
-            vals.append(card.num_value)
+            vals.append(card.numValue)
             if card.suit != suit {
-                return nil
+                return []
             }
         }
         return vals
     }
-    func straight() -> [Card] {
-        var cards = cards.copy()
-        last_card = cards.popFirst()
+    func straight() -> [Int] {
+        var tempCards: [Card] = []
+        for c in 0..<cards.count {
+            tempCards[c] = cards[c]
+        }
+        let highCard = tempCards.last ?? Card(suitInit: "Spades", valueInit: "Ace")
+        var lastCard = tempCards.popLast() ?? Card(suitInit: "Spades", valueInit: "Ace")
         for card in cards {
-            if card.num_value != last_card.num_value + 1{
+            if card.numValue != lastCard.numValue - 1 {
                 return []
             }
-            last_card = card
+            lastCard = card
         }
-        return [last_card]
+        return [highCard.numValue]
     }
-    func four_of_a_kind() -> [Card] {
-        if card_freq.values().sorted() == [1, 4] {
-            return get_keys(4) + get_keys(1)
+    func four_of_a_kind() -> [Int] {
+        if card_freq.values.sorted() == [1, 4] {
+            return getKeys(4)
         }
-        return nil
+        return []
     }
-    func full_house() -> [Card] {
-        if card_freq.values().sorted() == [2, 3] {
-            return get_keys(3) + get_keys(2)
+    func full_house() -> [Int] {
+        if card_freq.values.sorted() == [2, 3] {
+            return getKeys(3)
         }
-        return nil
+        return []
     }
-    func three_of_a_kind() -> [Card] {
-        if card_freq.values().sorted() == [1, 1, 3] {
-            return get_keys(3) + get_keys(1)
+    func three_of_a_kind() -> [Int] {
+        if card_freq.values.sorted() == [1, 1, 3] {
+            return getKeys(3)
         }
-        return nil
+        return []
     }
-    func two_pair() -> [Card] {
-        if card_freq.values().sorted() == [1, 2, 2] {
-            return get_keys(2) + get_keys(1)
+    func two_pair() -> [Int] {
+        if card_freq.values.sorted() == [1, 2, 2] {
+            return getKeys(2) + getKeys(1)
         }
-        return nil
+        return []
     }
-    func one_pair() -> [Card] {
-        if card_freq.values().sorted() == [1, 1, 1, 2] {
-            return get_keys(2) + get_keys(1)
+    func one_pair() -> [Int] {
+        if card_freq.values.sorted() == [1, 1, 1, 2] {
+            return getKeys(2) + getKeys(1)
         }
-        return nil
+        return []
     }
 }
 
