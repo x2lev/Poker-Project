@@ -11,16 +11,24 @@ class Card: Comparable {
     public var suit: String
     public var value: String
     public var numValue: Int
+    init() {
+        suit = "Spades"
+        value = "A"
+        numValue = 12
+    }
     init(_ suitInit: String, _ valueInit: String) {
         suit = suitInit
         value = valueInit
-        numValue = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].firstIndex(of: valueInit) ?? 0
+        numValue = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].firstIndex(of: valueInit)!
     }
     public static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.numValue == rhs.numValue
     }
     public static func < (lhs: Card, rhs: Card) -> Bool{
         return lhs.numValue < rhs.numValue
+    }
+    public func toString() -> String{
+        return "card\(suit)\(value)"
     }
 }
 
@@ -30,11 +38,22 @@ class Hand: Comparable {
     public var hand_type: String
     public var hand_num: Int
     public var high_cards: [Int]
-    init(cardsInit: Card...) {
+    init() {
+        cards = [Card(), Card(), Card(), Card(), Card()]
+        card_freq = [:]
+        hand_type = ""
+        hand_num = 0
+        high_cards = []
+        // hi
+    }
+    init(_ cardsInit: [Card]) {
         cards = cardsInit.sorted()
         hand_type = "High Card"
         hand_num = 0
         high_cards = []
+        for card in cards {
+            high_cards.append(card.numValue)
+        }
         card_freq = [:]
         card_freq = getCardFreq()
         if four_of_a_kind() != [] {
@@ -125,8 +144,8 @@ class Hand: Comparable {
         for c in 0..<cards.count {
             tempCards[c] = cards[c]
         }
-        let highCard = tempCards.last ?? Card(suitInit: "Spades", valueInit: "Ace")
-        var lastCard = tempCards.popLast() ?? Card(suitInit: "Spades", valueInit: "Ace")
+        let highCard = tempCards.last!
+        var lastCard = tempCards.popLast()!
         for card in cards {
             if card.numValue != lastCard.numValue - 1 {
                 return []

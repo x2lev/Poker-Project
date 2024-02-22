@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var deck: [String] = [
-        "HeartsA", "HeartsK", "HeartsQ", "HeartsJ", "Hearts10", "Hearts9", "Hearts10", "Hearts9",
-        "Hearts8", "Hearts7", "Hearts6", "Hearts5", "Hearts4", "Hearts3", "Hearts2",
-        "DiamondsA", "DiamondsK", "DiamondsQ", "DiamondsJ", "Diamonds10", "Diamonds9", "Diamonds10", "Diamonds9",
-        "Diamonds8", "Diamonds7", "Diamonds6", "Diamonds5", "Diamonds4", "Diamonds3", "Diamonds2",
-        "SpadesA", "SpadesK", "SpadesQ", "SpadesJ", "Spades10", "Spades9", "Spades10", "Spades9",
-        "Spades8", "Spades7", "Spades6", "Spades5", "Spades4", "Spades3", "Spades2",
-        "ClubsA", "ClubsK", "ClubsQ", "ClubsJ", "Clubs10", "Clubs9", "Clubs10", "Clubs9",
-        "Clubs8", "Clubs7", "Clubs6", "Clubs5", "Clubs4", "Clubs3", "Clubs2"
-    ].shuffled()
+    @State var deck: [Card] = []
     
-    @State var playerHand: [Card] = []
+    @State var playerHand: Hand = Hand()
+    @State var oppHand: Hand = Hand()
+    
+    @State var playerImages = ["cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2"]
     
     @State var toggles = [false, false, false, false, false]
     
@@ -56,7 +50,7 @@ struct ContentView: View {
                 Text("Your Hand:")
                 HStack {
                     VStack {
-                        Image(playerHand[0])
+                        Image(playerHand.cards[0].toString())
                             .resizable()
                             .scaledToFit()
                         
@@ -64,7 +58,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerHand[1])
+                        Image(playerImages[1])
                             .resizable()
                             .scaledToFit()
                         
@@ -72,7 +66,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerHand[2])
+                        Image(playerImages[2])
                             .resizable()
                             .scaledToFit()
                         
@@ -80,7 +74,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerHand[3])
+                        Image(playerImages[3])
                             .resizable()
                             .scaledToFit()
                         
@@ -88,7 +82,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerHand[4])
+                        Image(playerImages[4])
                             .resizable()
                             .scaledToFit()
                         
@@ -112,6 +106,26 @@ struct ContentView: View {
             }
             .foregroundColor(.white)
         }
+        .onAppear(perform: startGame)
+    }
+    
+    func startGame() {
+        let suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
+        let values: [String] = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+        for suit in suits {
+            for value in values {
+                deck.append(Card(suit, value))
+            }
+        }
+        deck.shuffle()
+        var playerTemp: [Card] = []
+        var oppTemp: [Card] = []
+        for _ in 1...5 {
+            playerTemp.append(deck.popLast()!)
+            oppTemp.append(deck.popLast()!)
+        }
+        playerHand = Hand(playerTemp)
+        oppHand = Hand(oppTemp)
     }
 }
 
