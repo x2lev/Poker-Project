@@ -10,11 +10,11 @@ import SwiftUI
 struct ContentView: View {
     @State var deck: [Card] = []
     
-    @State var playerHand: Hand = Hand()
-    @State var oppHand: Hand = Hand()
-    
-    @State var playerImages = ["cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2"]
-    
+    @State var playerHand = Hand()
+    @State var oppHand = Hand()
+    @State var oppCards = ["cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2"]
+    @State var won = false
+    @State var roundEnded = false
     @State var toggles = [false, false, false, false, false]
     
     var body: some View {
@@ -30,19 +30,19 @@ struct ContentView: View {
                 Spacer()
                 Text("Opponent's Hand:")
                 HStack {
-                    Image("cardBack_red2")
+                    Image(oppCards[0])
                         .resizable()
                         .scaledToFit()
-                    Image("cardBack_red2")
+                    Image(oppCards[1])
                         .resizable()
                         .scaledToFit()
-                    Image("cardBack_red2")
+                    Image(oppCards[2])
                         .resizable()
                         .scaledToFit()
-                    Image("cardBack_red2")
+                    Image(oppCards[3])
                         .resizable()
                         .scaledToFit()
-                    Image("cardBack_red2")
+                    Image(oppCards[4])
                         .resizable()
                         .scaledToFit()
                 }.padding(.horizontal, 10)
@@ -58,7 +58,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerImages[1])
+                        Image(playerHand.cards[1].toString())
                             .resizable()
                             .scaledToFit()
                         
@@ -66,7 +66,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerImages[2])
+                        Image(playerHand.cards[2].toString())
                             .resizable()
                             .scaledToFit()
                         
@@ -74,7 +74,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerImages[3])
+                        Image(playerHand.cards[3].toString())
                             .resizable()
                             .scaledToFit()
                         
@@ -82,7 +82,7 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                     VStack {
-                        Image(playerImages[4])
+                        Image(playerHand.cards[4].toString())
                             .resizable()
                             .scaledToFit()
                         
@@ -90,19 +90,26 @@ struct ContentView: View {
                             .labelsHidden()
                     }
                 }.padding(.horizontal, 10)
-                Spacer()
-                Spacer()
-                
-                Button("Draw!") {
-                    for t in toggles {
-                        if !t {
-                            print(t)
-                        }
-                    }
+                Group {
+                    Spacer()
+                    Text("You \(won ? "won" : "lost") 🤯")
+                    Spacer()
                 }
-                .frame(width: 100, height: 30)
-                .background(Color("PokerRed"))
-                .cornerRadius(10)
+                HStack {
+                    Button("Draw") {
+                        draw()
+                    }
+                    .frame(width: 100, height: 30)
+                    .background(Color("PokerRed"))
+                    .cornerRadius(10)
+                    
+                    Button("Restart") {
+                        startGame()
+                    }
+                    .frame(width: 100, height: 30)
+                    .background(Color("PokerRed"))
+                    .cornerRadius(10)
+                }
             }
             .foregroundColor(.white)
         }
@@ -110,6 +117,8 @@ struct ContentView: View {
     }
     
     func startGame() {
+        oppCards = ["cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2"]
+        toggles = [false, false, false, false, false]
         let suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
         let values: [String] = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
         for suit in suits {
@@ -126,6 +135,30 @@ struct ContentView: View {
         }
         playerHand = Hand(playerTemp)
         oppHand = Hand(oppTemp)
+    }
+    
+    func draw() {
+        let suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
+        let values: [String] = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+        for suit in suits {
+            for value in values {
+                deck.append(Card(suit, value))
+            }
+        }
+        deck.shuffle()
+        var playerTemp: [Card] = playerHand.cards
+        for i in 0...4 {
+            if !toggles[i] {
+                playerTemp[i] = deck.popLast()!
+            }
+        }
+        playerHand = Hand(playerTemp)
+        
+        for i in 0...4 {
+            oppCards[i] = oppHand.cards[i].toString()
+        }
+        
+        won = oppHand < playerHand 
     }
 }
 
