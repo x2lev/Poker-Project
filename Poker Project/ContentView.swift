@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var oppHand = Hand()
     @State var oppCards = ["cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2", "cardBack_red2"]
     @State var won = false
-    @State var roundEnded = false
+    @State var rounds = 0
     @State var toggles = [false, false, false, false, false]
     
     var body: some View {
@@ -92,19 +92,18 @@ struct ContentView: View {
                 }.padding(.horizontal, 10)
                 Group {
                     Spacer()
-                    Text("You \(won ? "won" : "lost") 🤯")
+                    Text(rounds > 2 ? "You \(won ? "won" : "lost") 🤯 \(playerHand.handType) vs \(oppHand.handType)" : "Lock 🔒 your cards 🃏")
                     Spacer()
                 }
                 HStack {
-                    Button("Draw") {
-                        draw()
-                    }
-                    .frame(width: 100, height: 30)
-                    .background(Color("PokerRed"))
-                    .cornerRadius(10)
-                    
-                    Button("Restart") {
-                        startGame()
+                    Button(rounds > 2 ? "Restart" : "Draw") {
+                        if rounds > 2 {
+                            startGame()
+                            rounds = 0
+                        } else {
+                            draw(rounds == 2)
+                            rounds += 1
+                        }
                     }
                     .frame(width: 100, height: 30)
                     .background(Color("PokerRed"))
@@ -137,15 +136,7 @@ struct ContentView: View {
         oppHand = Hand(oppTemp)
     }
     
-    func draw() {
-        let suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
-        let values: [String] = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-        for suit in suits {
-            for value in values {
-                deck.append(Card(suit, value))
-            }
-        }
-        deck.shuffle()
+    func draw(_ final: Bool) {
         var playerTemp: [Card] = playerHand.cards
         for i in 0...4 {
             if !toggles[i] {
@@ -154,8 +145,10 @@ struct ContentView: View {
         }
         playerHand = Hand(playerTemp)
         
-        for i in 0...4 {
-            oppCards[i] = oppHand.cards[i].toString()
+        if final {
+            for i in 0...4 {
+                oppCards[i] = oppHand.cards[i].toString()
+            }
         }
         
         won = oppHand < playerHand 

@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		467941092B8D0D02004F557A /* Poker-Project-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Poker-Project-Info.plist"; sourceTree = SOURCE_ROOT; };
 		46D159E22B7FF0C800F839E9 /* Poker_Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poker_Objects.swift; sourceTree = "<group>"; };
 		46F9E1892B7FF02000789617 /* Poker Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Poker Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F9E18C2B7FF02000789617 /* Poker_ProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poker_ProjectApp.swift; sourceTree = "<group>"; };
@@ -53,6 +54,7 @@
 		46F9E18B2B7FF02000789617 /* Poker Project */ = {
 			isa = PBXGroup;
 			children = (
+				467941092B8D0D02004F557A /* Poker-Project-Info.plist */,
 				46F9E18C2B7FF02000789617 /* Poker_ProjectApp.swift */,
 				46F9E18E2B7FF02000789617 /* ContentView.swift */,
 				46D159E22B7FF0C800F839E9 /* Poker_Objects.swift */,
@@ -273,9 +275,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Poker Project/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Poker-Project-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -301,9 +303,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Poker Project/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Poker-Project-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
